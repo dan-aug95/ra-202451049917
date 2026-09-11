@@ -34,3 +34,5 @@ dos passos 4 e 5.
 ## Requisitos
 
 .NET SDK 8+ (testado com 10), VSCode, Postman. Sem servidor de banco: SQLite e JSON são arquivos locais.
+
+mesmos comandos.

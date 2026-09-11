@@ -39,5 +39,4 @@ PUT (200/404) e DELETE duas vezes no mesmo id (204 depois 404 — por quê?).
 
 ## Gabarito
 
-`GABARITO/LivrosController.Gabarito.cs.txt` — solução completa comentada
-(professor: não distribuir antes da prática).
+`GABARITO/LivrosController.Gabarito.cs.txt` — solução completa comentada.

@@ -27,11 +27,11 @@ E-commerce com 80 mil produtos. Cada categoria tem atributos completamente difer
 
 **Sua análise:**
 
-1. Modelo recomendado:   ☐ Relacional     ☐ Documento     ☐ Chave-valor     ☐ Grafo
+1. Modelo recomendado:  Documento
 
-2. Justificativa (mínimo 2 fatores do contexto):
+2. Justificativa (mínimo 2 fatores do contexto): Estrutura flexível, com atributos diferentes por categoria; permite adicionar novos campos sem alterar tabelas. O produto pode ser lido inteiro de uma vez.
 
-3. Principal risco da escolha:
+3. Principal risco da escolha: Consultas e relatórios complexos entre diferentes categorias podem ser mais difíceis.
 
 ## CENÁRIO 02 — MegaCart — o carrinho da Black Friday
 
@@ -44,11 +44,11 @@ Serviço de carrinho de compras de um varejista gigante. Na Black Friday são mi
 
 **Sua análise:**
 
-1. Modelo recomendado:   ☐ Relacional     ☐ Documento     ☐ Chave-valor     ☐ Grafo
+1. Modelo recomendado:  Chave-valor
 
-2. Justificativa (mínimo 2 fatores do contexto):
+2. Justificativa (mínimo 2 fatores do contexto): Acesso sempre pela chave do cliente e exige baixa latência. Possui suporte a TTL, facilitando a expiração em 48h.
 
-3. Principal risco da escolha:
+3. Principal risco da escolha:  Perda ou indisponibilidade dos dados do carrinho.
 
 ## CENÁRIO 03 — PayBank — dinheiro não pode evaporar
 
@@ -61,11 +61,11 @@ Módulo de transferências de um banco. Uma transferência debita uma conta e cr
 
 **Sua análise:**
 
-1. Modelo recomendado:   ☐ Relacional     ☐ Documento     ☐ Chave-valor     ☐ Grafo
+1. Modelo recomendado:   Relacional  
 
-2. Justificativa (mínimo 2 fatores do contexto):
+2. Justificativa (mínimo 2 fatores do contexto): Necessita de consistência forte e transações ACID. O esquema é estável e os relatórios precisam de joins complexos.
 
-3. Principal risco da escolha:
+3. Principal risco da escolha: Maior dificuldade de escalar horizontalmente.
 
 ## CENÁRIO 04 — FriendLink — amigos dos seus amigos
 
@@ -78,12 +78,15 @@ Rede social profissional em que o produto principal é a indicação: “pessoas
 
 **Sua análise:**
 
-1. Modelo recomendado:   ☐ Relacional     ☐ Documento     ☐ Chave-valor     ☐ Grafo
+1. Modelo recomendado: Grafo
 
-2. Justificativa (mínimo 2 fatores do contexto):
+2. Justificativa (mínimo 2 fatores do contexto): O sistema trabalha principalmente com conexões e caminhos entre pessoas. Consultas de vários níveis são mais eficientes em grafos do que com vários self-joins.
 
-3. Principal risco da escolha:
+3. Principal risco da escolha: Crescimento muito grande do grafo pode aumentar o custo de armazenamento e processamento.
 
 ## DESAFIO
 
 1. Escolha um dos cenários e responda: se a rede particionar (metade dos servidores não enxerga a outra metade), o que o sistema deve fazer — parar de responder para não errar, ou continuar respondendo mesmo arriscando dados desatualizados? Qual letra do CAP vocês sacrificariam e por quê?
+escolheria parar de responder durante a partição para evitar dados incorretos.
+
+CAP: sacrificaria a Disponibilidade (A) para manter Consistência (C), pois em um banco é mais importante não apresentar ou realizar operações com saldo incorreto.

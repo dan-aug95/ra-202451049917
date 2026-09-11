@@ -46,4 +46,4 @@ de cada anti-padrão.
 ## Gabarito
 
 `GABARITO/AlunosController.Gabarito.cs.txt` — versão refatorada completa,
-com o mapa correção-por-anti-padrão (professor: não distribuir antes).
+com o mapa correção-por-anti-padrão.

@@ -60,6 +60,7 @@ src/
 │   ├── Controllers/       #   PetShopController — endpoints 01 a 12
 │   ├── Data/              #   PetShopStore — 2.000 pets, 6.000 consultas
 │   └── Models/
-├── GABARITO/              # correções comentadas — não distribuir antes da prática
+├── GABARITO/              # correções comentadas
 └── testes/                # Postman, .http e curl
 ```
+
