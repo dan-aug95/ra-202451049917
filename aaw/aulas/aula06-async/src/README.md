@@ -223,4 +223,4 @@ Olhe os **logs nos terminais** — eles contam a história completa do que está
 
 ## Gabarito
 
-`GABARITO/PedidosController.Gabarito.cs.txt` e `GABARITO/NotificacaoBackground.Gabarito.cs.txt` — versões completas com todos os TODOs resolvidos (professor: não distribuir antes).
+`GABARITO/PedidosController.Gabarito.cs.txt` e `GABARITO/NotificacaoBackground.Gabarito.cs.txt` — versões completas com todos os TODOs resolvidos.

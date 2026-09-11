@@ -27,16 +27,13 @@ No checkout do PagFácil, ao clicar em “Pagar”, o serviço de Pagamentos pre
 
 **Sua análise:**
 
-1. Estilo recomendado:   ☐ Síncrono      ☐ Assíncrono (fila/evento)      ☐ API Gateway/BFF
+1. Estilo recomendado:   ☐ Síncrono
 
-2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens):
+2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens): Cliente → Pagamentos → Contas → Pagamentos → Cliente
 
-|  |
-| --- |
+3. Justificativa (mínimo 2 fatores): A resposta é necessária na hora para aprovar ou negar a compra; o serviço de Contas normalmente responde rápido.
 
-3. Justificativa (mínimo 2 fatores):
-
-4. Principal risco da escolha:
+4. Principal risco da escolha: Se o serviço de Contas cair ou ficar lento, o pagamento também será afetado.
 
 ## CENÁRIO 02 — CadastraJá — o e-mail de boas-vindas
 
@@ -48,16 +45,13 @@ Após criar a conta no CadastraJá, o sistema envia um e-mail de boas-vindas. O 
 
 **Sua análise:**
 
-1. Estilo recomendado:   ☐ Síncrono      ☐ Assíncrono (fila/evento)      ☐ API Gateway/BFF
+1. Estilo recomendado:   assíncrono
 
-2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens):
+2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens): Cadastro → Fila → Serviço de E-mail → Provedor
 
-|  |
-| --- |
+3. Justificativa (mínimo 2 fatores): O usuário não precisa esperar o e-mail; a fila permite novas tentativas em caso de falha.
 
-3. Justificativa (mínimo 2 fatores):
-
-4. Principal risco da escolha:
+4. Principal risco da escolha:  O e-mail pode atrasar ou ser enviado mais de uma vez.
 
 ## CENÁRIO 03 — MegaMarket — baixa de estoque nos picos
 
@@ -69,16 +63,13 @@ No marketplace MegaMarket, cada venda gera uma baixa no serviço de Estoque. Nas
 
 **Sua análise:**
 
-1. Estilo recomendado:   ☐ Síncrono      ☐ Assíncrono (fila/evento)      ☐ API Gateway/BFF
+1. Estilo recomendado:  ☐ Assíncrono
 
-2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens):
+2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens): Checkout → Fila/Eventos → Estoque
 
-|  |
-| --- |
+3. Justificativa (mínimo 2 fatores): A fila absorve picos de tráfego e evita deixar o checkout lento. A baixa pode acontecer alguns segundos depois.
 
-3. Justificativa (mínimo 2 fatores):
-
-4. Principal risco da escolha:
+4. Principal risco da escolha: Mensagens duplicadas ou acúmulo da fila podem causar inconsistências.
 
 ## CENÁRIO 04 — AppBanco — uma tela, cinco serviços
 
@@ -90,17 +81,17 @@ A tela inicial do AppBanco mostra saldo, fatura do cartão, investimentos, empr�
 
 **Sua análise:**
 
-1. Estilo recomendado:   ☐ Síncrono      ☐ Assíncrono (fila/evento)      ☐ API Gateway/BFF
+1. Estilo recomendado:  ☐ API Gateway/BFF
 
-2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens):
+2. Desenhe o fluxo (caixas = serviços, setas = chamadas/mensagens): App → BFF → Saldo / Cartão / Investimentos / Empréstimos / Cashback
 
-|  |
-| --- |
+3. Justificativa (mínimo 2 fatores): O app faz apenas uma chamada e recebe uma resposta já organizada. Mobile e web podem ter BFFs diferentes.
 
-3. Justificativa (mínimo 2 fatores):
-
-4. Principal risco da escolha:
+4. Principal risco da escolha: O BFF pode virar um ponto central de falha ou gargalo.
 
 ## DESAFIO
 
 1. Escolha um cenário em que vocês indicaram ASSÍNCRONO. Os brokers de mensagens costumam garantir entrega “pelo menos uma vez” — ou seja, a MESMA mensagem pode chegar duas vezes. O que aconteceria no seu fluxo? Como o consumidor deveria se proteger?
+No MegaMarket, uma mensagem duplicada poderia baixar o estoque duas vezes.
+
+O consumidor deve usar idempotência, identificando cada venda por um ID único e ignorando mensagens já processadas.
